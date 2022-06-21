@@ -15,17 +15,17 @@
   </servlet>
   
   <servlet>
-  <servlet-name>Liststudent</servlet-name>
+  <servlet-name>ListStudent</servlet-name>
   <servlet-class>controller.ListStudent</servlet-class>
   </servlet>
   
   <servlet>
-  <servlet-name>Updatestudent</servlet-name>
+  <servlet-name>UpdateStudent</servlet-name>
   <servlet-class>controller.UpdateStudentController</servlet-class>
   </servlet>
   
   <servlet>
-  <servlet-name>Deletestudent</servlet-name>
+  <servlet-name>DeleteStudent</servlet-name>
   <servlet-class>controller.DeleteStudent</servlet-class>
   </servlet>
   

@@ -15,8 +15,9 @@ public class StudentDaoImpl implements StudentDao {
 
 	@Override
 	public boolean createStudent(StudentEntities std) {
+		Session session = null;
 		try {
-			Session session = factory.openSession();
+			 session = factory.openSession();
 			Transaction tx = session.beginTransaction();
 			session.save(std);
 			tx.commit();
@@ -28,23 +29,24 @@ public class StudentDaoImpl implements StudentDao {
 			e.printStackTrace();
 			return false;
 		} finally {
-			HibernateUtill.close();
+			session.close();
 		}
 	}
 
 	@Override
 	public StudentEntities getStudentRollNum(int rollnum) {
-		Session session = null;
 		StudentEntities entity;
+		Session session = null;
 		String query = "from StudentEntities student where student.rollnum =:rollnum";
 		try {
 			session = factory.openSession();
 			Transaction tx = session.beginTransaction();
-			Query<StudentEntities> q1 = session.createQuery(query);
+			Query q1 = session.createQuery(query);
 			q1.setParameter("rollnum", rollnum);
-			entity = q1.uniqueResult();
+			entity = (StudentEntities) q1.uniqueResult();
 			tx.commit();
             System.out.println("Student roll number  get succesfully...");
+            System.out.println(entity);
 			return entity;
 
 		} catch (Exception e) {
@@ -62,20 +64,21 @@ public class StudentDaoImpl implements StudentDao {
 
 	@Override
 	public List<StudentEntities> listStudents() {
+		List<StudentEntities> std;
 		Session session = null;
-		List<StudentEntities> entity = null;
 		String query = "from StudentEntities";
 		try {
 			session = factory.openSession();
 			Transaction tx = session.beginTransaction();
 			Query q1 = session.createQuery(query);
-			List<StudentEntities> std = q1.list();
-			for (StudentEntities student : std) {
+			List<StudentEntities> std1 = q1.list();
+			for (StudentEntities student : std1) {
 				System.out.println(student.getRollnum() + " : " + student.getName() + " : " + student.getAddress());
 			}
 			tx.commit();
 			System.out.println("we got the list of student...");
-			return entity;
+			return std1;
+			
 
 		} catch (Exception e) {
 			System.out.println("oops List of student not found...");
@@ -86,22 +89,24 @@ public class StudentDaoImpl implements StudentDao {
 			session.close();
 		}
 		
+		
+		
 
 	}
 
 	@Override
 	public boolean updateStudent(int rollnum, StudentEntities std) {
+		
 		Session session = null;
-		StudentEntities entity;
-		Query q = session.createQuery("update StudentEntities set address =:a where rollnum =: q");
+		String q = "update StudentEntities set address =:a where rollnum =: q";
 		try {
 			session = factory.openSession();
 			Transaction tx = session.beginTransaction();
+            Query query = session.createQuery(q);
+			query.setParameter("q",rollnum);
+			query.setParameter("a", std.getAddress());
 
-			q.setParameter("a", "Nasik");
-			q.setParameter("q", 100);
-
-			int r = q.executeUpdate();
+			int r = query.executeUpdate();
 			System.out.println("Updated...");
 			System.out.println(r);
 			tx.commit();
@@ -121,13 +126,14 @@ public class StudentDaoImpl implements StudentDao {
 
 	@Override
 	public boolean deleteStudent(int rollnum) {
+		StudentEntities entity ;
 		Session session = null;
-		StudentEntities entity = new StudentEntities();
-		Query q = session.createQuery("delete from Student1 where rollnum =: e");
+		String query = "delete from StudentEntities where rollnum =: e";
 		try {
 			session = factory.openSession();
 			Transaction tx = session.beginTransaction();
-			q.setParameter("e", 100);
+			Query q = session.createQuery(query);
+			q.setParameter("e",rollnum);
 			int r = q.executeUpdate();
 			System.out.println("deleted...: ");
 			System.out.println(r);

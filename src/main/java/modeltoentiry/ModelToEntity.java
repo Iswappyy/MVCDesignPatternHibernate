@@ -11,24 +11,24 @@ public class ModelToEntity {
 	
 	public static StudentEntities convertToEntity(Student model) {
 		
-		StudentEntities se = new StudentEntities();
+		StudentEntities entity = new StudentEntities();
 		
-		se.setRollnum(model.getRollnum());
-		se.setName(model.getName());
-		se.setAddress(model.getAddress());
+		entity.setRollnum(model.getRollnum());
+		entity.setName(model.getName());
+		entity.setAddress(model.getAddress());
 		
-		return se;
+		return entity;
 		
 		
 	}
-public static Student convertToModel(StudentEntities std) {
+public static Student convertToModel(StudentEntities entity) {
 		
 	Student model = new Student();
 	
-	model.setId(std.getId());
-	model.setRollnum(std.getRollnum());
-	model.setName(std.getName());
-	model.setAddress(std.getAddress());
+	model.setId(entity.getId());
+	model.setRollnum(entity.getRollnum());
+	model.setName(entity.getName());
+	model.setAddress(entity.getAddress());
 	
 	return model;
 	}

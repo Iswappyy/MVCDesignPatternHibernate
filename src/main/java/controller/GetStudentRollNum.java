@@ -15,16 +15,16 @@ public class GetStudentRollNum extends HttpServlet {
 	
 	StudentService service = new StudentImpl();
 	
-	public void doGet(HttpServletRequest rq, HttpServletResponse rp) throws IOException {
+	protected void doGet(HttpServletRequest rq, HttpServletResponse rp) throws IOException {
 		
 		
 		int rollnum = Integer.parseInt(rq.getParameter("rollnum"));
 		
-		
-		PrintWriter out = rp.getWriter();
 		Student std = service.getStudentRollNum(rollnum);
 		
-		System.out.println("we got data through roll number..");
+		PrintWriter out = rp.getWriter();
+		
+		//System.out.println("we got data through roll number..");
 		
 		if( std!= null)
 		{
